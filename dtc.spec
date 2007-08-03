@@ -1,10 +1,10 @@
 Name:           dtc
 Version:        0
-Release:        0.4.20070709%{?dist}
+Release:        0.5.20070709%{?dist}
 Summary:        Device Tree Compiler
 
 Group:          Development/Tools
-License:        GPL
+License:        GPLv2+
 URL:            http://dtc.ozlabs.org/
 # The source for this package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
@@ -39,6 +39,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 
 %changelog
+* Fri Aug 03 2007 Josh Boyer <jwboyer@jdub.homelinux.org>
+- Update license field
+
 * Mon Jul 09 2007 Josh Boyer <jwboyer@jdub.homelinux.org>
 - Update to new snapshot
 

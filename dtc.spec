@@ -1,17 +1,11 @@
 Name:           dtc
-Version:        0
-Release:        0.5.20070709%{?dist}
+Version:        1.0.0
+Release:        1%{?dist}
 Summary:        Device Tree Compiler
-
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://dtc.ozlabs.org/
-# The source for this package was pulled from upstream's vcs.  Use the
-# following commands to generate the tarball:
-#  git clone git://www.jdl.com/software/dtc.git; cd dtc; 
-#  git checkout fdd2e6f9; rm -rf .git; cd ..; mv dtc dtc-20070709;
-#  tar -czvf dtc-20070709.tar.gz dtc-20070709;
-Source:         dtc-20070709.tar.gz
+Source:         http://www.jdl.com/software/dtc-%{version}.tgz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex, bison
@@ -21,14 +15,18 @@ The Device Tree Compiler generates flattened Open Firmware style device trees
 for use with PowerPC machines that lack an Open Firmware implementation
 
 %prep
-%setup -q -n dtc-20070709
+%setup -q -n dtc
 
 %build
 make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr
+
+#remove the devel stuff.
+rm -rf $RPM_BUILD_ROOT/usr/include/*
+rm -rf $RPM_BUILD_ROOT/usr/lib/*.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -39,6 +37,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 
 %changelog
+* Thu Aug 09 2007 Josh Boyer <jwboyer@jdub.homelinux.org>
+- Update to official 1.0.0 release
+
 * Fri Aug 03 2007 Josh Boyer <jwboyer@jdub.homelinux.org>
 - Update license field
 

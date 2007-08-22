@@ -1,6 +1,6 @@
 Name:           dtc
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -37,6 +37,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 
 %changelog
+* Tue Aug 21 2007 Josh Boyer <jwboyer@jdub.homelinux.org>
+- Bump and rebuild
+
 * Thu Aug 09 2007 Josh Boyer <jwboyer@jdub.homelinux.org>
 - Update to official 1.0.0 release
 

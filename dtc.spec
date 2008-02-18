@@ -1,6 +1,6 @@
 Name:           dtc
 Version:        1.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -37,6 +37,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 
 %changelog
+* Mon Feb 18 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1.1.0-2
+- Autorebuild for GCC 4.3
+
 * Thu Jan 24 2008 Josh Boyer <jwboyer@gmail.com>
 - Update to 1.1.0
 

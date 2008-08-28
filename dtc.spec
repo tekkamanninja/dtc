@@ -1,11 +1,11 @@
 Name:           dtc
-Version:        1.1.0
-Release:        2%{?dist}
+Version:        1.2.0
+Release:        1%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://dtc.ozlabs.org/
-Source:         http://www.jdl.com/software/dtc-%{version}.tgz
+Source:         http://www.jdl.com/software/dtc-v%{version}.tgz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex, bison
@@ -15,7 +15,7 @@ The Device Tree Compiler generates flattened Open Firmware style device trees
 for use with PowerPC machines that lack an Open Firmware implementation
 
 %prep
-%setup -q -n dtc
+%setup -q -n dtc-v%{version}
 
 %build
 make %{?_smp_mflags}
@@ -37,6 +37,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 
 %changelog
+* Thu Aug 28 2008 Josh Boyer <jwboyer@gmail.com>
+- Update to latest release
+
 * Mon Feb 18 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1.1.0-2
 - Autorebuild for GCC 4.3
 

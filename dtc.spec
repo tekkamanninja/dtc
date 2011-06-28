@@ -1,6 +1,6 @@
 Name:           dtc
 Version:        1.3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 
 %changelog
+* Tue Jun 28 2011 Josh Boyer <jwboyer@gmail.com>
+- Fixup error during tarball upload
+
 * Tue Jun 28 2011 Josh Boyer <jwboyer@gmail.com>
 - Point to git tree for URL (#717217)
 - Add libfdt subpackages based on patch from Paolo Bonzini (#443882)

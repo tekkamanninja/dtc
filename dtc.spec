@@ -1,11 +1,13 @@
 Name:           dtc
-Version:        1.2.0
-Release:        4%{?dist}
+Version:        1.3.0
+Release:        1%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
-URL:            http://dtc.ozlabs.org/
+URL:            http://git.jdl.com/gitweb/?p=dtc.git;a=summary
 Source:         http://www.jdl.com/software/dtc-v%{version}.tgz
+Patch0:         dtc-check.patch
+Patch1:         dtc-flattree.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex, bison
@@ -14,19 +16,34 @@ BuildRequires:  flex, bison
 The Device Tree Compiler generates flattened Open Firmware style device trees
 for use with PowerPC machines that lack an Open Firmware implementation
 
+%package -n libfdt
+Summary: Device tree library
+Group: Development/Libraries
+
+%description -n libfdt
+libfdt is a library to process Open Firmware style device trees on various
+architectures.
+
+%package -n libfdt-devel
+Summary: Development headers for device tree library
+Group: Development/Libraries
+Requires: libfdt = %{version}-%{release}
+
+%description -n libfdt-devel
+This package provides development files for libfdt
+
 %prep
 %setup -q -n dtc-v%{version}
+%patch0 -p1
+%patch1 -p1
 
 %build
 make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr
-
-#remove the devel stuff.
-rm -rf $RPM_BUILD_ROOT/usr/include/*
-rm -rf $RPM_BUILD_ROOT/usr/lib/*.a
+make install DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr LIBDIR=%{_libdir}
+rm -rf $RPM_BUILD_ROOT/%{_libdir}/*.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -36,7 +53,29 @@ rm -rf $RPM_BUILD_ROOT
 %doc GPL
 %{_bindir}/*
 
+%files -n libfdt
+%defattr(-,root,root,-)
+%doc GPL
+%{_libdir}/libfdt-%{version}.so
+%{_libdir}/libfdt.so.*
+
+%files -n libfdt-devel
+%defattr(-,root,root,-)
+%{_libdir}/libfdt.so
+%{_includedir}/*
+
+%post -n libfdt
+/sbin/ldconfig
+
+%postun -n libfdt
+/sbin/ldconfig
+
 %changelog
+* Tue Jun 28 2011 Josh Boyer <jwboyer@gmail.com>
+- Point to git tree for URL (#717217)
+- Add libfdt subpackages based on patch from Paolo Bonzini (#443882)
+- Update to latest release
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 

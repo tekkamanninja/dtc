@@ -1,6 +1,6 @@
 Name:           dtc
 Version:        1.3.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -45,6 +45,10 @@ rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr LIBDIR=%{_libdir}
 rm -rf $RPM_BUILD_ROOT/%{_libdir}/*.a
 
+# we don't want or need ftdump and it conflicts with freetype-demos, so drop
+# it (rhbz 797805)
+rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -71,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 
 %changelog
+* Mon Feb 27 2012 Josh Boyer <jwboyer@redhat.com>
+- Don't package ftdump (rhbz 797805)
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 

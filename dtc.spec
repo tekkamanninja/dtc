@@ -1,6 +1,6 @@
 Name:           dtc
 Version:        1.3.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -8,6 +8,7 @@ URL:            http://git.jdl.com/gitweb/?p=dtc.git;a=summary
 Source:         http://www.jdl.com/software/dtc-v%{version}.tgz
 Patch0:         dtc-check.patch
 Patch1:         dtc-flattree.patch
+Patch2:         libfdt-env-install.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex, bison
@@ -36,6 +37,7 @@ This package provides development files for libfdt
 %setup -q -n dtc-v%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 make %{?_smp_mflags}
@@ -75,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 
 %changelog
+* Tue Jun 4 2013 Paolo Bonzini <pbonzini@redhat.com> - 1.3.0-6
+- Install libfdt_env.h too (rhbz 969955)
+
 * Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 

@@ -1,12 +1,13 @@
 Name:           dtc
 Version:        1.3.0
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://git.jdl.com/gitweb/?p=dtc.git;a=summary
 Source:         http://www.jdl.com/software/dtc-v%{version}.tgz
 Patch0:         dtc-update.patch
+Patch1:         use-tx-as-the-type-specifier-instead-of-zx.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex, bison
@@ -34,6 +35,7 @@ This package provides development files for libfdt
 %prep
 %setup -q -n dtc-v%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 make %{?_smp_mflags}
@@ -73,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 
 %changelog
+* Thu Jun 06 2013 Josh Boyer <jwboyer@redhat.com> - 1.3.0-8
+- Fix type specifier error (from Dan Horák)
+
 * Mon Jun 03 2013 Josh Boyer <jwboyer@redhat.com> - 1.3.0-7
 - Update dtc to include libfdt_env.h (rhbz 969955)
 

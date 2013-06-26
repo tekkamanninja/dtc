@@ -1,14 +1,12 @@
 Name:           dtc
-Version:        1.3.0
-Release:        6%{?dist}
+Version:        1.4.0
+Release:        1%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://git.jdl.com/gitweb/?p=dtc.git;a=summary
 Source:         http://www.jdl.com/software/dtc-v%{version}.tgz
-Patch0:         dtc-check.patch
-Patch1:         dtc-flattree.patch
-Patch2:         libfdt-env-install.patch
+Patch1:         use-tx-as-the-type-specifier-instead-of-zx.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex, bison
@@ -35,9 +33,7 @@ This package provides development files for libfdt
 
 %prep
 %setup -q -n dtc-v%{version}
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 make %{?_smp_mflags}
@@ -77,6 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 
 %changelog
+* Mon Jun 24 2013 Josh Boyer <jwboyer@redhat.com> - 1.4.0-1
+- New dtc 1.4.0 release (rhbz 977480)
+
 * Tue Jun 4 2013 Paolo Bonzini <pbonzini@redhat.com> - 1.3.0-6
 - Install libfdt_env.h too (rhbz 969955)
 

@@ -1,6 +1,6 @@
 Name:           dtc
 Version:        1.4.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 %postun -n libfdt -p /sbin/ldconfig
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Sat Dec 21 2013 Ville Skyttä <ville.skytta@iki.fi> - 1.4.0-3
 - Avoid shell invocation and fix deps of libfdt %%post* scripts.
 

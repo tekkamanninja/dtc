@@ -1,15 +1,11 @@
-# Tarfile created using git
-# git clone git://git.kernel.org/pub/scm/utils/dtc/dtc.git
-# git archive --format=tar --prefix=%{name}-%{version}/ v%{version} | bzip2 > ~/%{name}-%{version}.tar.bz2
-
 Name:           dtc
 Version:        1.4.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://devicetree.org/Device_Tree_Compiler
-Source:         %{name}-%{version}.tar.bz2
+Source:         https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
 Patch1:         use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires:  flex, bison
@@ -68,6 +64,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %postun -n libfdt -p /sbin/ldconfig
 
 %changelog
+* Mon Jan  5 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.1-2
+- Use tar file from kernel.org
+
 * Mon Jan  5 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.1-1
 - New dtc 1.4.1 release
 - Update URL and Sources

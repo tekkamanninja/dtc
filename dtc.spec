@@ -1,13 +1,16 @@
+# Tarfile created using git
+# git clone git://git.kernel.org/pub/scm/utils/dtc/dtc.git
+# git archive --format=tar --prefix=%{name}-%{version}/ v%{version} | bzip2 > ~/%{name}-%{version}.tar.bz2
+
 Name:           dtc
-Version:        1.4.0
-Release:        5%{?dist}
+Version:        1.4.1
+Release:        1%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
-URL:            http://git.jdl.com/gitweb/?p=dtc.git;a=summary
-Source:         http://www.jdl.com/software/dtc-v%{version}.tgz
+URL:            http://devicetree.org/Device_Tree_Compiler
+Source:         %{name}-%{version}.tar.bz2
 Patch1:         use-tx-as-the-type-specifier-instead-of-zx.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  flex, bison
 
@@ -32,14 +35,13 @@ Requires: libfdt = %{version}-%{release}
 This package provides development files for libfdt
 
 %prep
-%setup -q -n dtc-v%{version}
+%setup -q
 %patch1 -p1
 
 %build
-make %{?_smp_mflags}
+make %{?_smp_mflags} V=1
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr LIBDIR=%{_libdir}
 rm -rf $RPM_BUILD_ROOT/%{_libdir}/*.a
 
@@ -47,22 +49,17 @@ rm -rf $RPM_BUILD_ROOT/%{_libdir}/*.a
 # it (rhbz 797805)
 rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root,-)
 %doc GPL
 %{_bindir}/*
 
 %files -n libfdt
-%defattr(-,root,root,-)
 %doc GPL
 %{_libdir}/libfdt-%{version}.so
 %{_libdir}/libfdt.so.*
 
 %files -n libfdt-devel
-%defattr(-,root,root,-)
 %{_libdir}/libfdt.so
 %{_includedir}/*
 
@@ -71,6 +68,11 @@ rm -rf $RPM_BUILD_ROOT
 %postun -n libfdt -p /sbin/ldconfig
 
 %changelog
+* Mon Jan  5 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.1-1
+- New dtc 1.4.1 release
+- Update URL and Sources
+- Cleanup spec
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 

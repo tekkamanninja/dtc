@@ -47,7 +47,7 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
 
 %files
-%doc GPL
+%doc GPL Documentation/manual.txt
 %{_bindir}/*
 
 %files -n libfdt

@@ -1,6 +1,6 @@
 Name:           dtc
 Version:        1.4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -47,11 +47,14 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
 
 %files
-%doc GPL Documentation/manual.txt
+%{!?_licensedir:%global license %%doc}
+%license GPL
+%doc Documentation/manual.txt
 %{_bindir}/*
 
 %files -n libfdt
-%doc GPL
+%{!?_licensedir:%global license %%doc}
+%license GPL
 %{_libdir}/libfdt-%{version}.so
 %{_libdir}/libfdt.so.*
 
@@ -64,6 +67,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %postun -n libfdt -p /sbin/ldconfig
 
 %changelog
+* Tue Jun 16 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.1-4
+- Use %%license
+
 * Sat Feb 21 2015 Till Maas <opensource@till.name> - 1.4.1-3
 - Rebuilt for Fedora 23 Change
   https://fedoraproject.org/wiki/Changes/Harden_all_packages_with_position-independent_code

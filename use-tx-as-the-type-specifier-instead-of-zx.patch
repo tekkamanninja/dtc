@@ -1,21 +1,6 @@
-From 46ed9702a0005da87edd0cc3d34dbe24d1526784 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Dan=20Hor=C3=A1k?= <dan@danny.cz>
-Date: Thu, 6 Jun 2013 17:01:39 +0200
-Subject: [PATCH] use tx as the type specifier instead of zx
-
-A couple of printf() commands use "zx" as a type specifier for printing
-a difference of 2 pointers. "z" means a size_t, but using "t" which is
-ptrdiff_t is correct. The issue was found on s390 (32-bit) where size_t
-is defined as "unsigned long" as opposed to the usual "unsigned int".
----
- fdtdump.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/fdtdump.c b/fdtdump.c
-index 723770d..c5811f0 100644
---- a/fdtdump.c
-+++ b/fdtdump.c
-@@ -95,7 +95,7 @@ static void dump_blob(void *blob, bool debug)
+--- dtc-1.4.2/fdtdump.c.orig	2016-09-03 12:02:30.000000000 +0100
++++ dtc-1.4.2/fdtdump.c	2016-09-11 11:58:07.656497902 +0100
+@@ -97,7 +97,7 @@
  	p = p_struct;
  	while ((tag = fdt32_to_cpu(GET_CELL(p))) != FDT_END) {
  
@@ -24,7 +9,7 @@ index 723770d..c5811f0 100644
  		        (uintptr_t)p - blob_off - 4, tag, tagname(tag));
  
  		if (tag == FDT_BEGIN_NODE) {
-@@ -135,8 +135,8 @@ static void dump_blob(void *blob, bool debug)
+@@ -137,8 +137,8 @@
  
  		p = PALIGN(p + sz, 4);
  
@@ -35,7 +20,7 @@ index 723770d..c5811f0 100644
  		printf("%*s%s", depth * shift, "", s);
  		utilfdt_print_data(t, sz);
  		printf(";\n");
-@@ -210,14 +210,14 @@ int main(int argc, char *argv[])
+@@ -212,14 +212,14 @@
  					fdt_off_dt_strings(p) < this_len)
  					break;
  				if (debug)
@@ -45,13 +30,10 @@ index 723770d..c5811f0 100644
  			}
  			++p;
  		}
- 		if (!p)
+ 		if (!p || ((endp - p) < FDT_MAGIC_SIZE))
  			die("%s: could not locate fdt magic\n", file);
 -		printf("%s: found fdt at offset %#zx\n", file, p - buf);
 +		printf("%s: found fdt at offset %#tx\n", file, p - buf);
  		buf = p;
  	}
  
--- 
-1.8.1.4
-

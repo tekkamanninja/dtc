@@ -1,6 +1,6 @@
 Name:           dtc
-Version:        1.4.1
-Release:        5%{?dist}
+Version:        1.4.2
+Release:        1%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
@@ -67,6 +67,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %postun -n libfdt -p /sbin/ldconfig
 
 %changelog
+* Sun Sep 11 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.2-1
+- New dtc 1.4.2 release
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 

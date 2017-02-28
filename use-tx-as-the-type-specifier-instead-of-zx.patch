@@ -1,6 +1,6 @@
---- dtc-1.4.2/fdtdump.c.orig	2016-09-03 12:02:30.000000000 +0100
-+++ dtc-1.4.2/fdtdump.c	2016-09-11 11:58:07.656497902 +0100
-@@ -97,7 +97,7 @@
+--- dtc-1.4.2/fdtdump.c.orig	2016-12-26 22:44:17.000000000 +0000
++++ dtc-1.4.2/fdtdump.c	2017-02-28 01:29:28.250537073 +0000
+@@ -98,7 +98,7 @@
  	p = p_struct;
  	while ((tag = fdt32_to_cpu(GET_CELL(p))) != FDT_END) {
  
@@ -9,7 +9,7 @@
  		        (uintptr_t)p - blob_off - 4, tag, tagname(tag));
  
  		if (tag == FDT_BEGIN_NODE) {
-@@ -137,8 +137,8 @@
+@@ -138,8 +138,8 @@
  
  		p = PALIGN(p + sz, 4);
  
@@ -20,8 +20,8 @@
  		printf("%*s%s", depth * shift, "", s);
  		utilfdt_print_data(t, sz);
  		printf(";\n");
-@@ -212,14 +212,14 @@
- 					fdt_off_dt_strings(p) < this_len)
+@@ -222,14 +222,14 @@
+ 				if (valid_header(p, this_len))
  					break;
  				if (debug)
 -					printf("%s: skipping fdt magic at offset %#zx\n",
@@ -30,10 +30,10 @@
  			}
  			++p;
  		}
- 		if (!p || ((endp - p) < FDT_MAGIC_SIZE))
+ 		if (!p || endp - p < sizeof(struct fdt_header))
  			die("%s: could not locate fdt magic\n", file);
 -		printf("%s: found fdt at offset %#zx\n", file, p - buf);
 +		printf("%s: found fdt at offset %#tx\n", file, p - buf);
  		buf = p;
- 	}
- 
+ 	} else if (!valid_header(buf, len))
+ 		die("%s: header is not valid\n", file);

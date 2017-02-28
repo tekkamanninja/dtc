@@ -1,11 +1,14 @@
+%define gitshort 0931cea
+
 Name:           dtc
 Version:        1.4.2
-Release:        2%{?dist}
+Release:        3.%{gitshort}%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://devicetree.org/Device_Tree_Compiler
-Source:         https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
+# Source:         https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
+Source:		dtc-%{gitshort}.tar.bz2
 Patch1:         use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires:  flex, bison
@@ -67,6 +70,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %postun -n libfdt -p /sbin/ldconfig
 
 %changelog
+* Tue Feb 28 2017 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.2-3.0931cea
+- Rebase to same git snapshot that kernel is using for DT Overlays
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 

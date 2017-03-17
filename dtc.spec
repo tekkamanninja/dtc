@@ -1,14 +1,11 @@
-%define gitshort 0931cea
-
 Name:           dtc
-Version:        1.4.2
-Release:        3.%{gitshort}%{?dist}
+Version:        1.4.4
+Release:        1%{?dist}
 Summary:        Device Tree Compiler
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://devicetree.org/Device_Tree_Compiler
-# Source:         https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
-Source:		dtc-%{gitshort}.tar.bz2
+Source:         https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
 Patch1:         use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires:  flex, bison
@@ -42,7 +39,7 @@ make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr LIBDIR=%{_libdir}
-rm -rf $RPM_BUILD_ROOT/%{_libdir}/*.a
+find %{buildroot} -type f -name "*.a" -delete
 
 # we don't want or need ftdump and it conflicts with freetype-demos, so drop
 # it (rhbz 797805)
@@ -70,6 +67,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %postun -n libfdt -p /sbin/ldconfig
 
 %changelog
+* Fri Mar 17 2017 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.4-1
+- New dtc 1.4.4 release
+
 * Tue Feb 28 2017 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.2-3.0931cea
 - Rebase to same git snapshot that kernel is using for DT Overlays
 

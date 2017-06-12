@@ -1,22 +1,27 @@
-Name:           dtc
-Version:        1.4.4
-Release:        1%{?dist}
-Summary:        Device Tree Compiler
-Group:          Development/Tools
-License:        GPLv2+
-URL:            http://devicetree.org/Device_Tree_Compiler
-Source:         https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
-Patch1:         use-tx-as-the-type-specifier-instead-of-zx.patch
+Name:          dtc
+Version:       1.4.4
+Release:       2%{?dist}
+Summary:       Device Tree Compiler
+License:       GPLv2+
+URL:           https://devicetree.org/
 
-BuildRequires:  flex, bison
+Source:        https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
+Patch1:        use-tx-as-the-type-specifier-instead-of-zx.patch
+Patch2:        dtc-python-bindings.patch
+
+BuildRequires: flex bison swig
+BuildRequires: python2-devel python2-setuptools
 
 %description
-The Device Tree Compiler generates flattened Open Firmware style device trees
-for use with PowerPC machines that lack an Open Firmware implementation
+Devicetree is a data structure for describing hardware. Rather than hard coding
+every detail of a device into an operating system, many aspects of the hardware
+can be described in a data structure that is passed to the operating system at
+boot time. The devicetree is used by OpenFirmware, OpenPOWER Abstraction Layer
+(OPAL), Power Architecture Platform Requirements (PAPR) and in the standalone
+Flattened Device Tree (FDT) form.
 
 %package -n libfdt
 Summary: Device tree library
-Group: Development/Libraries
 
 %description -n libfdt
 libfdt is a library to process Open Firmware style device trees on various
@@ -24,27 +29,38 @@ architectures.
 
 %package -n libfdt-devel
 Summary: Development headers for device tree library
-Group: Development/Libraries
 Requires: libfdt = %{version}-%{release}
 
 %description -n libfdt-devel
 This package provides development files for libfdt
 
+%package -n python2-libfdt
+Summary: Python 2 bindings for device tree library
+%{?python_provide:%python_provide python2-libfdt}
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description -n python2-libfdt
+This package provides python2 bindings for libfdt
+
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 make %{?_smp_mflags} V=1
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr LIBDIR=%{_libdir}
+make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/usr LIBDIR=%{_libdir}
 find %{buildroot} -type f -name "*.a" -delete
 
 # we don't want or need ftdump and it conflicts with freetype-demos, so drop
 # it (rhbz 797805)
 rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
+%post -n libfdt -p /sbin/ldconfig
+
+%postun -n libfdt -p /sbin/ldconfig
 
 %files
 %{!?_licensedir:%global license %%doc}
@@ -62,11 +78,13 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{_libdir}/libfdt.so
 %{_includedir}/*
 
-%post -n libfdt -p /sbin/ldconfig
-
-%postun -n libfdt -p /sbin/ldconfig
+%files -n python2-libfdt
+%{python_sitearch}/*
 
 %changelog
+* Mon Jun 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.4-2
+- Add upstream patches for python bindings
+
 * Fri Mar 17 2017 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.4-1
 - New dtc 1.4.4 release
 

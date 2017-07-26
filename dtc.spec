@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.4.4
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -82,6 +82,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python_sitearch}/*
 
 %changelog
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.4-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Mon Jun 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.4-2
 - Add upstream patches for python bindings
 

@@ -1,13 +1,12 @@
 Name:          dtc
-Version:       1.4.4
-Release:       4%{?dist}
+Version:       1.4.5
+Release:       1%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
 
 Source:        https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
 Patch1:        use-tx-as-the-type-specifier-instead-of-zx.patch
-Patch2:        dtc-python-bindings.patch
 
 BuildRequires: flex bison swig
 BuildRequires: python2-devel python2-setuptools
@@ -45,7 +44,6 @@ This package provides python2 bindings for libfdt
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
 
 %build
 make %{?_smp_mflags} V=1
@@ -82,6 +80,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python_sitearch}/*
 
 %changelog
+* Thu Sep 28 2017 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.5-1
+- New dtc 1.4.5 release
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 

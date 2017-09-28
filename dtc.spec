@@ -7,6 +7,7 @@ URL:           https://devicetree.org/
 
 Source:        https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
 Patch1:        use-tx-as-the-type-specifier-instead-of-zx.patch
+Patch2:        checks-Use-proper-format-modifier-for-size_t.patch
 
 BuildRequires: flex bison swig
 BuildRequires: python2-devel python2-setuptools
@@ -44,6 +45,7 @@ This package provides python2 bindings for libfdt
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 make %{?_smp_mflags} V=1

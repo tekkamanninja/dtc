@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.4.6
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -46,7 +46,7 @@ This package provides python2 bindings for libfdt
 %patch1 -p1
 
 %build
-make %{?_smp_mflags} V=1
+make %{?_smp_mflags} V=1 CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/usr LIBDIR=%{_libdir}
@@ -78,6 +78,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python_sitearch}/*
 
 %changelog
+* Fri Jan 26 2018 Florian Weimer <fweimer@redhat.com> - 1.4.6-2
+- Use Fedora build flags during build
+
 * Mon Jan 22 2018 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.6-1
 - New dtc 1.4.6 release
 

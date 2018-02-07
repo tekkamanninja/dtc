@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.4.6
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -78,6 +78,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python_sitearch}/*
 
 %changelog
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.6-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Fri Jan 26 2018 Florian Weimer <fweimer@redhat.com> - 1.4.6-2
 - Use Fedora build flags during build
 

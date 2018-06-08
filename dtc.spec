@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.4.6
-Release:       4%{?dist}
+Release:       5%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -34,6 +34,13 @@ Requires: libfdt = %{version}-%{release}
 %description -n libfdt-devel
 This package provides development files for libfdt
 
+%package -n libfdt-static
+Summary: Static version of device tree library
+Requires: libfdt-devel = %{version}-%{release}
+
+%description -n libfdt-static
+This package provides the static library of libfdt
+
 %package -n python2-libfdt
 Summary: Python 2 bindings for device tree library
 %{?python_provide:%python_provide python2-libfdt}
@@ -51,7 +58,6 @@ make %{?_smp_mflags} V=1 CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/usr LIBDIR=%{_libdir}
-find %{buildroot} -type f -name "*.a" -delete
 
 # we don't want or need ftdump and it conflicts with freetype-demos, so drop
 # it (rhbz 797805)
@@ -71,6 +77,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{_libdir}/libfdt-%{version}.so
 %{_libdir}/libfdt.so.*
 
+%files -n libfdt-static
+%{_libdir}/libfdt.a
+
 %files -n libfdt-devel
 %{_libdir}/libfdt.so
 %{_includedir}/*
@@ -79,6 +88,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python_sitearch}/*
 
 %changelog
+* Wed Jun 06 2018 Bas Mevissen <abuse@basmevissen.nl> 1.4.6-5
+- Add static library package, see BZ#1440975
+
 * Wed Mar  7 2018 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.6-4
 - Add gcc BR
 

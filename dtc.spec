@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.4.6
-Release:       5%{?dist}
+Release:       6%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -88,6 +88,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python_sitearch}/*
 
 %changelog
+* Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.6-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed Jun 06 2018 Bas Mevissen <abuse@basmevissen.nl> 1.4.6-5
 - Add static library package, see BZ#1440975
 

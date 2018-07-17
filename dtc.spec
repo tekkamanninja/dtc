@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.4.6
-Release:       6%{?dist}
+Release:       7%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -85,9 +85,13 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{_includedir}/*
 
 %files -n python2-libfdt
-%{python_sitearch}/*
+%{python2_sitearch}/*
 
 %changelog
+* Tue Jul 17 2018 Miro Hrončok <mhroncok@redhat.com> - 1.4.6-7
+- Update Python macros to new packaging standards
+  (See https://fedoraproject.org/wiki/Changes/Move_usr_bin_python_into_separate_package)
+
 * Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.6-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 

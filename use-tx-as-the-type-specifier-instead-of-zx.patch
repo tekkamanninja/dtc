@@ -1,15 +1,15 @@
---- dtc-1.4.2/fdtdump.c.orig	2016-12-26 22:44:17.000000000 +0000
-+++ dtc-1.4.2/fdtdump.c	2017-02-28 01:29:28.250537073 +0000
-@@ -98,7 +98,7 @@
+--- dtc-1.4.7/fdtdump.c.orig	2018-07-23 04:00:50.000000000 +0100
++++ dtc-1.4.7/fdtdump.c	2018-08-18 22:04:23.059267042 +0100
+@@ -100,7 +100,7 @@
  	p = p_struct;
  	while ((tag = fdt32_to_cpu(GET_CELL(p))) != FDT_END) {
  
--		dumpf("%04zx: tag: 0x%08x (%s)\n",
-+		dumpf("%04tx: tag: 0x%08x (%s)\n",
+-		dumpf("%04zx: tag: 0x%08"PRIx32" (%s)\n",
++		dumpf("%04tx: tag: 0x%08"PRIx32" (%s)\n",
  		        (uintptr_t)p - blob_off - 4, tag, tagname(tag));
  
  		if (tag == FDT_BEGIN_NODE) {
-@@ -138,8 +138,8 @@
+@@ -140,8 +140,8 @@
  
  		p = PALIGN(p + sz, 4);
  
@@ -20,7 +20,7 @@
  		printf("%*s%s", depth * shift, "", s);
  		utilfdt_print_data(t, sz);
  		printf(";\n");
-@@ -222,14 +222,14 @@
+@@ -229,14 +229,14 @@
  				if (valid_header(p, this_len))
  					break;
  				if (debug)

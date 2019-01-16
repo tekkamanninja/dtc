@@ -1,12 +1,13 @@
 Name:          dtc
 Version:       1.4.7
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
 
 Source:        https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
 Patch1:        use-tx-as-the-type-specifier-instead-of-zx.patch
+Patch2:        0001-Kill-bogus-TYPE_BLOB-marker-type.patch
 
 BuildRequires: gcc make
 BuildRequires: flex bison swig
@@ -50,8 +51,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 This package provides python2 bindings for libfdt
 
 %prep
-%setup -q
-%patch1 -p1
+%autosetup -p1
 
 %build
 make %{?_smp_mflags} V=1 CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
@@ -88,6 +88,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python2_sitearch}/*
 
 %changelog
+* Tue Jan 15 2019 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.7-2
+- Upstream fix for crash (rhbz 1663054)
+
 * Sat Aug 18 2018 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.7-1
 - New dtc 1.4.7 release
 

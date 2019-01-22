@@ -63,9 +63,7 @@ make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/us
 # it (rhbz 797805)
 rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
-%post -n libfdt -p /sbin/ldconfig
-
-%postun -n libfdt -p /sbin/ldconfig
+%ldconfig_scriptlets -n libfdt
 
 %files
 %license GPL

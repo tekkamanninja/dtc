@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.4.7
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -86,6 +86,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python2_sitearch}/*
 
 %changelog
+* Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.7-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Tue Jan 15 2019 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.7-2
 - Upstream fix for crash (rhbz 1663054)
 

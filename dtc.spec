@@ -1,17 +1,17 @@
 Name:          dtc
-Version:       1.4.7
-Release:       3%{?dist}
+Version:       1.5.0
+Release:       1%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
 
-Source:        https://ftp.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
-Patch1:        use-tx-as-the-type-specifier-instead-of-zx.patch
-Patch2:        0001-Kill-bogus-TYPE_BLOB-marker-type.patch
+Source0:       https://www.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
+#Patch1:       use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires: gcc make
 BuildRequires: flex bison swig
-BuildRequires: python2-devel python2-setuptools
+#BuildRequires: python2-devel python2-setuptools
+BuildRequires: python3-devel python3-setuptools
 
 %description
 Devicetree is a data structure for describing hardware. Rather than hard coding
@@ -42,22 +42,26 @@ Requires: libfdt-devel = %{version}-%{release}
 %description -n libfdt-static
 This package provides the static library of libfdt
 
-%package -n python2-libfdt
-Summary: Python 2 bindings for device tree library
+%package -n python3-libfdt
+Summary: Python 3 bindings for device tree library
 %{?python_provide:%python_provide python2-libfdt}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
-%description -n python2-libfdt
+%description -n python3-libfdt
 This package provides python2 bindings for libfdt
 
 %prep
 %autosetup -p1
+sed -i 's/python2/python3/' pylibfdt/setup.py
+#sed -i 's/PREFIX/SETUP_PREFIX/' pylibfdt/Makefile.pylibfdt
 
 %build
 make %{?_smp_mflags} V=1 CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/usr LIBDIR=%{_libdir}
+#make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/usr LIBDIR=%{_libdir}
+PYTHON=python3 make install DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
+                            LIBDIR=%{_libdir} BINDIR=%{_bindir} INCLUDEDIR=%{_includedir} V=1
 
 # we don't want or need ftdump and it conflicts with freetype-demos, so drop
 # it (rhbz 797805)
@@ -82,10 +86,13 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{_libdir}/libfdt.so
 %{_includedir}/*
 
-%files -n python2-libfdt
-%{python2_sitearch}/*
+%files -n python3-libfdt
+%{python3_sitearch}/*
 
 %changelog
+* Tue Mar 12 2019 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.0-1
+- New dtc 1.5.0 release
+
 * Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.7-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 

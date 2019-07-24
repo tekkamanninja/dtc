@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.5.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -90,6 +90,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python3_sitearch}/*
 
 %changelog
+* Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Tue Mar 12 2019 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.0-1
 - New dtc 1.5.0 release
 

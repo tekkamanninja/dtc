@@ -1,16 +1,14 @@
 Name:          dtc
-Version:       1.5.0
-Release:       3%{?dist}
+Version:       1.5.1
+Release:       1%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
 
 Source0:       https://www.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
-#Patch1:       use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires: gcc make
 BuildRequires: flex bison swig
-#BuildRequires: python2-devel python2-setuptools
 BuildRequires: python3-devel python3-setuptools
 
 %description
@@ -53,7 +51,6 @@ This package provides python2 bindings for libfdt
 %prep
 %autosetup -p1
 sed -i 's/python2/python3/' pylibfdt/setup.py
-#sed -i 's/PREFIX/SETUP_PREFIX/' pylibfdt/Makefile.pylibfdt
 
 %build
 make %{?_smp_mflags} V=1 CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
@@ -76,7 +73,7 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
 %files -n libfdt
 %license GPL
-%{_libdir}/libfdt-%{version}.so
+%{_libdir}/libfdt-1.5.0.so
 %{_libdir}/libfdt.so.*
 
 %files -n libfdt-static
@@ -90,6 +87,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python3_sitearch}/*
 
 %changelog
+* Wed Sep 11 2019 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.1-1
+- New dtc 1.5.1 release
+
 * Tue Sep 10 2019 Miro Hrončok <mhroncok@redhat.com> - 1.5.0-3
 - Rebuilt for Python 3.8
 

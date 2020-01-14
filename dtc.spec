@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.5.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -53,7 +53,7 @@ This package provides python2 bindings for libfdt
 sed -i 's/python2/python3/' pylibfdt/setup.py
 
 %build
-make %{?_smp_mflags} V=1 CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
+make %{?_smp_mflags} V=1 CC="%{__cc} $RPM_OPT_FLAGS $RPM_LD_FLAGS"
 
 %install
 #make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/usr LIBDIR=%{_libdir}
@@ -87,6 +87,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python3_sitearch}/*
 
 %changelog
+* Tue Jan 14 2020 Tom Stellard <tstellar@redhat.com> - 1.5.1-2
+- Use __cc macro instead of hard-coding gcc
+
 * Wed Sep 11 2019 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.1-1
 - New dtc 1.5.1 release
 

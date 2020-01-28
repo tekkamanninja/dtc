@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.5.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -87,6 +87,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python3_sitearch}/*
 
 %changelog
+* Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Tue Jan 14 2020 Tom Stellard <tstellar@redhat.com> - 1.5.1-2
 - Use __cc macro instead of hard-coding gcc
 

@@ -1,11 +1,12 @@
 Name:          dtc
 Version:       1.5.1
-Release:       3%{?dist}
+Release:       4%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
 
 Source0:       https://www.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
+Patch1:        0001-Remove-redundant-YYLOC-global-declaration.patch
 
 BuildRequires: gcc make
 BuildRequires: flex bison swig
@@ -87,6 +88,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python3_sitearch}/*
 
 %changelog
+* Thu Jan 30 2020 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.1-4
+- Upstream patch to fix gcc-10 build
+
 * Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 

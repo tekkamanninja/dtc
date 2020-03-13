@@ -1,12 +1,11 @@
 Name:          dtc
-Version:       1.5.1
-Release:       4%{?dist}
+Version:       1.6.0
+Release:       1%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
 
 Source0:       https://www.kernel.org/pub/software/utils/%{name}/%{name}-%{version}.tar.xz
-Patch1:        0001-Remove-redundant-YYLOC-global-declaration.patch
 
 BuildRequires: gcc make
 BuildRequires: flex bison swig
@@ -57,12 +56,10 @@ sed -i 's/python2/python3/' pylibfdt/setup.py
 make %{?_smp_mflags} V=1 CC="%{__cc} $RPM_OPT_FLAGS $RPM_LD_FLAGS"
 
 %install
-#make install DESTDIR=$RPM_BUILD_ROOT SETUP_PREFIX=$RPM_BUILD_ROOT/usr PREFIX=/usr LIBDIR=%{_libdir}
-PYTHON=python3 make install DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
-                            LIBDIR=%{_libdir} BINDIR=%{_bindir} INCLUDEDIR=%{_includedir} V=1
+make install DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
+             LIBDIR=%{_libdir} BINDIR=%{_bindir} INCLUDEDIR=%{_includedir} V=1
 
-# we don't want or need ftdump and it conflicts with freetype-demos, so drop
-# it (rhbz 797805)
+# we don't want ftdump and it conflicts with freetype-demos, so drop it (rhbz 797805)
 rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
 %ldconfig_scriptlets -n libfdt
@@ -74,7 +71,7 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
 %files -n libfdt
 %license GPL
-%{_libdir}/libfdt-1.5.0.so
+%{_libdir}/libfdt-1.6.0.so
 %{_libdir}/libfdt.so.*
 
 %files -n libfdt-static
@@ -88,6 +85,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python3_sitearch}/*
 
 %changelog
+* Fri Mar 13 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 1.6.0-1
+- Update to 1.6.0
+
 * Thu Jan 30 2020 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.1-4
 - Upstream patch to fix gcc-10 build
 

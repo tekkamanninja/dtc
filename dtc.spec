@@ -53,11 +53,11 @@ This package provides python2 bindings for libfdt
 sed -i 's/python2/python3/' pylibfdt/setup.py
 
 %build
-make %{?_smp_mflags} V=1 CC="%{__cc} $RPM_OPT_FLAGS $RPM_LD_FLAGS"
+%{make_build} CC="%{__cc} $RPM_OPT_FLAGS $RPM_LD_FLAGS"
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
-             LIBDIR=%{_libdir} BINDIR=%{_bindir} INCLUDEDIR=%{_includedir} V=1
+%{make_install} DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
+                LIBDIR=%{_libdir} BINDIR=%{_bindir} INCLUDEDIR=%{_includedir}
 
 # we don't want ftdump and it conflicts with freetype-demos, so drop it (rhbz 797805)
 rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump

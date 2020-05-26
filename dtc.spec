@@ -1,6 +1,6 @@
 Name:          dtc
 Version:       1.6.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Device Tree Compiler
 License:       GPLv2+
 URL:           https://devicetree.org/
@@ -85,6 +85,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 %{python3_sitearch}/*
 
 %changelog
+* Tue May 26 2020 Miro Hrončok <mhroncok@redhat.com> - 1.6.0-2
+- Rebuilt for Python 3.9
+
 * Fri Mar 13 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 1.6.0-1
 - Update to 1.6.0
 

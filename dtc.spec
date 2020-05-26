@@ -53,7 +53,7 @@ This package provides python2 bindings for libfdt
 sed -i 's/python2/python3/' pylibfdt/setup.py
 
 %build
-%{make_build} CC="%{__cc} $RPM_OPT_FLAGS $RPM_LD_FLAGS"
+%{make_build} EXTRA_CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 
 %install
 %{make_install} DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \

@@ -71,7 +71,7 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/ftdump
 
 %files -n libfdt
 %license GPL
-%{_libdir}/libfdt-1.6.0.so
+%{_libdir}/libfdt-%{version}.so
 %{_libdir}/libfdt.so.*
 
 %files -n libfdt-static

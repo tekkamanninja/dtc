@@ -56,7 +56,7 @@ sed -i 's/python2/python3/' pylibfdt/setup.py
 %{make_build} EXTRA_CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 
 %install
-%{make_install} DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
+%{make_install} DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/%{_prefix} \
                 LIBDIR=%{_libdir} BINDIR=%{_bindir} INCLUDEDIR=%{_includedir}
 
 # we don't want ftdump and it conflicts with freetype-demos, so drop it (rhbz 797805)

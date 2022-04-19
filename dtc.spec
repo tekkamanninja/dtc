@@ -11,6 +11,8 @@ BuildRequires: gcc make
 BuildRequires: flex bison swig
 BuildRequires: python3-devel python3-setuptools
 
+%bcond_with skip_werror
+
 %description
 Devicetree is a data structure for describing hardware. Rather than hard coding
 every detail of a device into an operating system, many aspects of the hardware
@@ -51,6 +53,10 @@ This package provides python2 bindings for libfdt
 %prep
 %autosetup -p1
 sed -i 's/python2/python3/' pylibfdt/setup.py
+
+%if %{with skip_werror}
+sed -i 's/-Werror//' Makefile
+%endif
 
 %build
 %{make_build} EXTRA_CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
